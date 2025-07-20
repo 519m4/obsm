@@ -13,11 +13,6 @@ INT main(INT argc, char* argv[])
 
     scanf_s("%d", &num);
 
-    printf("[INFO]Would you want to delete origin source file?\n>>");
-
-    scanf_s("%d", &num2);
-
-
     FILE* in = fopen(argv[1], "rb");
 
     FILE* out = (num == 0) ? fopen("enc", "wb") : fopen("decrypted", "wb");
@@ -31,12 +26,20 @@ INT main(INT argc, char* argv[])
 
     Chacha20_crypto(in, out, num);
 
-    if (num2 == 0) {
+    if (num == 0) {
 
-        remove(argv[1]);
-        return 0;
+        printf("[INFO]Would you want to delete origin source file?\n>>");
+
+        scanf_s("%d", &num2);
+
+        if (num2 == 0) {
+
+            remove(argv[1]);
+
+        }
 
     }
+
     return 0;
 
 }
