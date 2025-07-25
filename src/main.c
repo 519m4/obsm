@@ -34,7 +34,8 @@ INT main(INT argc, char* argv[])
 
         if (num2 == 0) {
 
-            remove(argv[1]);
+            //remove(argv[1]);
+            WDeletefile(argv[1]);
 
         }
 

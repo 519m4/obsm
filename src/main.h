@@ -8,12 +8,14 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <io.h>
 #include "Chacha20.h"
 
 #pragma comment(lib, "bcrypt.lib")
 #pragma warning(disable : 4996)
 #define CHUNK (4 * 1024 * 1024) //4mb
 
+VOID WDeletefile(const char* origin);
 VOID Chacha20_crypto(FILE* instream, FILE* outstream, INT selection);
 
 #pragma region public
