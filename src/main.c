@@ -2,16 +2,16 @@
 
 INT main(INT argc, char* argv[])
 {
-    INT num;
-    INT num2;
+    char* choice1[2] = { "Encrypt", "Decrypt" };
+    char* choice2[2] = { "Yes", "No" };
 
     if (argc < 2) {
         printf("plz set file bro");
         return 1;
     }
-    printf("[INFO]Enter 0 or 1.\n0:Encrypt file\n1:Decrypt file(you need to put key and nonce on same dir)\n>>");
+    printf("obsm made by Sigma\nChoose Encrypt or Decrypt\n(If you want to decrypt file, you need to put key and nonce on same dir)\nDir: %s\n", argv[1]);
 
-    scanf_s("%d", &num);
+    INT num = selectionmenu((sizeof(choice1) / sizeof(choice1[0])), choice1);
 
     FILE* in = fopen(argv[1], "rb");
 
@@ -28,14 +28,13 @@ INT main(INT argc, char* argv[])
 
     if (num == 0) {
 
-        printf("[INFO]Would you want to delete origin source file?\n>>");
+        printf("\nWould you want to delete origin source file?\n");
 
-        scanf_s("%d", &num2);
+        INT num2 = selectionmenu((sizeof(choice2) / sizeof(choice2[0])), choice2);
 
         if (num2 == 0) {
 
-            //remove(argv[1]);
-            WDeletefile(argv[1]);
+            remove(argv[1]);
 
         }
 
