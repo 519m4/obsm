@@ -1,6 +1,6 @@
 #include "main.h"
 
-VOID Chacha20_crypto(FILE* instream, FILE* outstream, INT selection) {
+VOID Crypt(FILE* instream, FILE* outstream, INT selection) {
 
 	if (selection == 0) { //Gen key & nonce 
 
@@ -58,17 +58,22 @@ VOID Chacha20_crypto(FILE* instream, FILE* outstream, INT selection) {
 	struct chacha20_context ctx;
 	chacha20_init_context(&ctx, key, nonce, 0);
 
+	
+
 	while ((bytes = fread(buffer, 1, CHUNK, instream))) {
 
 		chacha20_xor(&ctx, buffer, (UINT)bytes);
-
-		fwrite(buffer, 1, bytes, outstream);
+		
+		//fwrite(buffer, 1, bytes, outstream);
 
 	}
 
 	fclose(instream);
 	fclose(outstream);
 	free(buffer);
+
+	RtlSecureZeroMemory2(&key, sizeof(key));
+	RtlSecureZeroMemory2(&key, sizeof(key));
 
 	printf("\nSuccessfully Decrypt/Encrypt.");
 

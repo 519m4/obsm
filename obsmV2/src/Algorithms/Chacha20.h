@@ -4,7 +4,7 @@ https://github.com/Ginurx/chacha20-c/blob/master/chacha20.c
 */
 
 #pragma once
-#include "main.h"
+#include "../main.h"
 
 #ifdef __cplusplus 
 extern "C" {

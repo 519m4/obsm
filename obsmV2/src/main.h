@@ -1,4 +1,5 @@
 #pragma once
+/*Includes*/
 #include <Windows.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -9,15 +10,13 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <io.h>
-#include "Chacha20.h"
+#include "Algorithms/Chacha20.h"
 #include "lib/includes/include.h"
-
+/*Libs*/
 #pragma comment(lib, "bcrypt.lib")
 #pragma warning(disable : 4996)
-#define CHUNK (4 * 1024 * 1024) //4mb
-
-//VOID WDeletefile(const char* origin);
-VOID Chacha20_crypto(FILE* instream, FILE* outstream, INT selection);
+#define CHUNK (4 * 1024 * 1024)
+VOID Crypt(FILE* instream, FILE* outstream, INT selection);
 
 #pragma region public
 uint8_t key[32];

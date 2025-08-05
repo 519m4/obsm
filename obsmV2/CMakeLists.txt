@@ -2,11 +2,12 @@
 	
 	Codes
 
-	src/chacha20.c
-	src/chacha20.h
+	src/Algorithms/chacha20.c
+	src/Algorithms/chacha20.h
 	src/cryptor.c
 	src/main.c
 	src/main.h
+	
 
 )
 
