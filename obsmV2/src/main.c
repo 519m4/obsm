@@ -16,18 +16,18 @@ INT main(INT argc, char* argv[])
 
     INT num = selectionmenu((sizeof(choice1) / sizeof(choice1[0])), choice1);
 
-    FILE* in = fopen(argv[1], "rb");
-
-    FILE* out = (num == 0) ? fopen(argv[1], "wb") : fopen("decrypted", "wb");
+    FILE* out = fopen(argv[1], "rb+");
+    //FILE* in = fopen(argv[1], "rb+");
 
     if (!out) {
 
         perror("[ERROR]fopen:");
+ 
         return 1;
 
     }
 
-    Crypt(in, out, num);
+    Crypt(out, num);
 
     if (num == 0) {
 

@@ -1,6 +1,6 @@
 #include "main.h"
 
-VOID Crypt(FILE* instream, FILE* outstream, INT selection) {
+VOID Crypt(FILE* outstream, INT selection) {
 
 	if (selection == 0) { //Gen key & nonce 
 
@@ -45,6 +45,8 @@ VOID Crypt(FILE* instream, FILE* outstream, INT selection) {
 
 
 	size_t bytes;
+	
+	long long offsets = 0;
 
 	UINT8* buffer = (UINT8*)malloc(CHUNK);
 
@@ -60,15 +62,20 @@ VOID Crypt(FILE* instream, FILE* outstream, INT selection) {
 
 	
 
-	while ((bytes = fread(buffer, 1, CHUNK, instream))) {
+	while ((bytes = fread(buffer, 1, CHUNK, outstream)) > 0) {
 
 		chacha20_xor(&ctx, buffer, (UINT)bytes);
+
+		_fseeki64(outstream, offsets, SEEK_SET);
+
+		fwrite(buffer, 1, bytes, outstream);
+
+		offsets += bytes;
 		
-		//fwrite(buffer, 1, bytes, outstream);
+		_fseeki64(outstream, offsets, SEEK_SET);
 
 	}
 
-	fclose(instream);
 	fclose(outstream);
 	free(buffer);
 
