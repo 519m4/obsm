@@ -1,14 +1,10 @@
 ﻿set(
-	
 	Codes
-
 	src/Algorithms/chacha20.c
 	src/Algorithms/chacha20.h
 	src/cryptor.c
 	src/main.c
 	src/main.h
-	
-
 )
 
 add_executable (obsmV2 ${Codes})

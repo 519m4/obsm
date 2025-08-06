@@ -3,21 +3,22 @@
 INT main(INT argc, char* argv[])
 {
     char* choice1[2] = { "Encrypt", "Decrypt" };
-    char* choice2[2] = { "Yes", "No" };
 
     if (argc < 2) {
 
-        printf("plz set file bro");
+        printf("Drag and drop to encrypt/decrypt file.\n\nPress enter to exit...");
+
+        (VOID)getchar();
+
         return 1;
 
     }
 
-    printf("obsm made by Sigma\nChoose Encrypt or Decrypt\n(If you want to decrypt file, you need to put key and nonce on same dir)\nDir: %s\n", argv[1]);
+    printf("obsm made by Sigma\nChoose Encrypt or Decrypt\n(If you want to decrypt file, you need to put key and nonce on same dir)\nDir: %s\n\n\nUse arrow keys to select, then press Enter key:\n", argv[1]);
 
     INT num = selectionmenu((sizeof(choice1) / sizeof(choice1[0])), choice1);
 
     FILE* out = fopen(argv[1], "rb+");
-    //FILE* in = fopen(argv[1], "rb+");
 
     if (!out) {
 
@@ -28,18 +29,6 @@ INT main(INT argc, char* argv[])
     }
 
     Crypt(out, num);
-
-    if (num == 0) {
-
-        printf("\n\nWould you want to delete origin source file?\n");
-
-        if (selectionmenu((sizeof(choice2) / sizeof(choice2[0])), choice2) == 0) {
-
-            remove(argv[1]);
-
-        }
-
-    }
 
     return 0;
 
