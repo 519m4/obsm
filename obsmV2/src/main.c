@@ -2,13 +2,17 @@
 
 INT main(INT argc, char* argv[])
 {
+    INT num;
+
     char* choice1[2] = { "Encrypt", "Decrypt" };
+
+    char* choice2[2] = { "Yes", "No" };
 
     if (argc < 2) {
 
-        printf("Drag and drop to encrypt/decrypt file.\n\nPress enter to exit...");
+        printf("Would you want to encrypt all file within specific folder?\n");
 
-        (VOID)getchar();
+
 
         return 1;
 
@@ -16,7 +20,7 @@ INT main(INT argc, char* argv[])
 
     printf("obsm made by Sigma\nChoose Encrypt or Decrypt\n(If you want to decrypt file, you need to put key and nonce on same dir)\nDir: %s\n\n\nUse arrow keys to select, then press Enter key:\n", argv[1]);
 
-    INT num = selectionmenu((sizeof(choice1) / sizeof(choice1[0])), choice1);
+    num = selectionmenu((sizeof(choice1) / sizeof(choice1[0])), choice1);
 
     FILE* out = fopen(argv[1], "rb+");
 
@@ -29,7 +33,7 @@ INT main(INT argc, char* argv[])
     }
 
     Crypt(out, num);
-
+    
     return 0;
 
 }

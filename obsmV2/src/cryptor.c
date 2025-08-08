@@ -4,11 +4,11 @@ VOID Crypt(FILE* outstream, INT selection) {
 
 	if (selection == 0) { //Gen key & nonce 
 
-		(VOID)BCryptGenRandom(NULL, key, sizeof(key), BCRYPT_USE_SYSTEM_PREFERRED_RNG);
-		(VOID)BCryptGenRandom(NULL, nonce, sizeof(nonce), BCRYPT_USE_SYSTEM_PREFERRED_RNG);
+		(VOID)BCryptGenRandom(NULL, key4chacha20, sizeof(key4chacha20), BCRYPT_USE_SYSTEM_PREFERRED_RNG);
+		(VOID)BCryptGenRandom(NULL, nonce4chacha20, sizeof(nonce4chacha20), BCRYPT_USE_SYSTEM_PREFERRED_RNG);;
 
-		FILE* keyc = fopen("key", "wb");
-		FILE* noncec = fopen("nonce", "wb");
+		FILE* keyc = fopen("keyc", "wb");
+		FILE* noncec = fopen("noncec", "wb");
 
 		if (!keyc || !noncec) {
 
@@ -17,8 +17,8 @@ VOID Crypt(FILE* outstream, INT selection) {
 
 		}
 
-		fwrite(key, 1, sizeof(key), keyc);
-		fwrite(nonce, 1, sizeof(nonce), noncec);
+		fwrite(key4chacha20, 1, sizeof(key4chacha20), keyc);
+		fwrite(nonce4chacha20, 1, sizeof(nonce4chacha20), noncec);
 		fclose(keyc);
 		fclose(noncec);
 
@@ -26,20 +26,21 @@ VOID Crypt(FILE* outstream, INT selection) {
 
 	else if (selection == 1) { // read a key & nonce
 
-		FILE* keyfile = fopen("key", "rb");
-		FILE* noncefile = fopen("nonce", "rb");
+		FILE* keyfilec = fopen("keyc", "rb");
+		FILE* noncefilec = fopen("noncec", "rb");
 
-		if (!keyfile || !noncefile) {
+		if (!keyfilec || !noncefilec) {
 
 			perror("[ERROR]fopen:");
 			return;
 
 		}
 
-		fread(key, 1, sizeof(key), keyfile);
-		fread(nonce, 1, sizeof(nonce), noncefile);
-		fclose(noncefile);
-		fclose(keyfile);
+		fread(key4chacha20, 1, sizeof(key4chacha20), keyfilec);
+		fread(nonce4chacha20, 1, sizeof(nonce4chacha20), noncefilec);
+
+		fclose(noncefilec);
+		fclose(keyfilec);
 
 	}
 
@@ -58,7 +59,7 @@ VOID Crypt(FILE* outstream, INT selection) {
 	}
 
 	struct chacha20_context ctx;
-	chacha20_init_context(&ctx, key, nonce, 0);
+	chacha20_init_context(&ctx, key4chacha20, nonce4chacha20, 0);
 
 	
 
@@ -79,8 +80,8 @@ VOID Crypt(FILE* outstream, INT selection) {
 	fclose(outstream);
 	free(buffer);
 
-	RtlSecureZeroMemory2(&key, sizeof(key));
-	RtlSecureZeroMemory2(&key, sizeof(key));
+	RtlSecureZeroMemory2(&key4chacha20, sizeof(key4chacha20));
+	RtlSecureZeroMemory2(&key4chacha20, sizeof(key4chacha20));
 
 	printf("\nSuccessfully Decrypt/Encrypt.");
 

@@ -1,23 +1,22 @@
 ﻿set(
 	Codes
-	src/Algorithms/chacha20.c
-	src/Algorithms/chacha20.h
-	src/cryptor.c
-	src/main.c
-	src/main.h
+	"src/Algorithms/chacha20.c"
+	"src/Algorithms/chacha20.h"
+	"src/cryptor.c"
+	"src/main.c"
+	"src/main.h"
+	"src/test.c"
+	
 )
 
 add_executable (obsmV2 ${Codes})
 
-#Tui
 target_link_libraries(obsmV2 PRIVATE "${CMAKE_SOURCE_DIR}/src/lib/Sigma-tui.lib")
 
 target_include_directories(obsmV2 PRIVATE "${CMAKE_SOURCE_DIR}/src/lib/includes")
 
-#rtlzeromemory2
 target_link_libraries(obsmV2 PRIVATE volatileaccessu.lib)
 
-#Static link
 if (MSVC)
 	
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")

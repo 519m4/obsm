@@ -18,9 +18,11 @@
 #pragma comment(lib, "volatileaccessu.lib")
 #pragma warning(disable : 4996)
 #define CHUNK (4 * 1024 * 1024)
-//VOID Crypt(FILE* outstream, FILE* cxstream, INT selection);
+
 VOID Crypt(FILE* outstream, INT selection);
+BOOL test(VOID);
+
 #pragma region public
-uint8_t key[32];
-uint8_t nonce[12];
+uint8_t key4chacha20[32];
+uint8_t nonce4chacha20[12];
 #pragma endregion
