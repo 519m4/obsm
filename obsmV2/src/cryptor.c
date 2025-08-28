@@ -1,14 +1,32 @@
 #include "main.h"
 
-VOID Crypt(FILE* outstream, INT selection) {
+VOID Crypt(_Inout_ FILE* outstream, _In_ INT selection, _In_opt_ BOOL b) {
 
 	if (selection == 0) { //Gen key & nonce 
 
-		(VOID)BCryptGenRandom(NULL, key4chacha20, sizeof(key4chacha20), BCRYPT_USE_SYSTEM_PREFERRED_RNG);
-		(VOID)BCryptGenRandom(NULL, nonce4chacha20, sizeof(nonce4chacha20), BCRYPT_USE_SYSTEM_PREFERRED_RNG);;
+		char* choice1[2] = { "Yes", "No" };
 
-		FILE* keyc = fopen("keyc", "wb");
-		FILE* noncec = fopen("noncec", "wb");
+		if (PathFileExistsA("key") || PathFileExistsA("nonce")) {
+
+			printf("\nWARNING!\n\nkey file or nonce file is already exists.\nIt'll be overwritten if you continue!\n\nOverwrite file?\n");
+
+			INT num = selectionmenu((sizeof(choice1) / sizeof(choice1[0])), choice1);
+
+			if (num == 1) {
+
+				printf("\nAction cancelled.");
+
+				return;
+				
+			}
+
+		}
+
+		(VOID)BCryptGenRandom(NULL, key4chacha20, sizeof(key4chacha20), BCRYPT_USE_SYSTEM_PREFERRED_RNG);
+		(VOID)BCryptGenRandom(NULL, nonce4chacha20, sizeof(nonce4chacha20), BCRYPT_USE_SYSTEM_PREFERRED_RNG);
+
+		FILE* keyc = fopen("key", "wb");
+		FILE* noncec = fopen("nonce", "wb");
 
 		if (!keyc || !noncec) {
 
@@ -26,8 +44,8 @@ VOID Crypt(FILE* outstream, INT selection) {
 
 	else if (selection == 1) { // read a key & nonce
 
-		FILE* keyfilec = fopen("keyc", "rb");
-		FILE* noncefilec = fopen("noncec", "rb");
+		FILE* keyfilec = fopen("key", "rb");
+		FILE* noncefilec = fopen("nonce", "rb");
 
 		if (!keyfilec || !noncefilec) {
 
